@@ -1,0 +1,13 @@
+# python
+.DS_Store
+venv/
+venv/*
+.vscode/
+.vscode/*
+config.*
+._.DS_Store
+__pycache__/
+in/
+out/
+data/
+._*.*
