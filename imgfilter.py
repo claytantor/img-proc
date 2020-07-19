@@ -57,11 +57,15 @@ def main(argv):
 
     args = parser.parse_args()
 
+    try:
+        os.makedirs(args.out)
+    except OSError:
+        pass
+
     all_files = find_files(args.indir)
     for file_path in all_files:
         filter_image(file_path, args.out)
         
-
 
 if __name__ == "__main__":
     main(sys.argv[1:])
