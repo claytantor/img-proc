@@ -9,3 +9,6 @@ docker run -it --rm -v $(pwd)/workspace:/workspace img-proc:latest python imgfil
 docker run -it --rm -v $(pwd)/workspace:/workspace img-proc:latest python imgslice.py -i /workspace/out -o /workspace/sliced
 
 
+## image copy
+
+docker run -it --rm -v $(pwd)/workspace:/workspace img-proc:latest python imgcopy.py -i /workspace/in/mirrors -o /workspace/out/mirrors
