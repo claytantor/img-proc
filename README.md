@@ -8,6 +8,8 @@ docker run -it --rm -v $(pwd)/workspace:/workspace img-proc:latest python imgfil
 
 docker run -it --rm -v $(pwd)/workspace:/workspace img-proc:latest python imgslice.py -i /workspace/out -o /workspace/sliced
 
+docker run -it --rm -v $(pwd)/workspace:/workspace img-proc:latest python imgslice.py -r 1 -c 16 -i /workspace/in/gan_reflect01 -o /workspace/sliced -e jpg
+
 
 ## image copy
 
