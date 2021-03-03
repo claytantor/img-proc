@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
 
+from PIL import Image
+
 from skimage import data
 from skimage.filters import try_all_threshold
 from skimage.filters import threshold_mean
@@ -27,22 +29,22 @@ def find_files(dir_name, pattern="*.png", recursive=True):
         all_files.append(name)
     return all_files 
 
-def filter_image(in_image, out_dir):
+def filter_image(in_image, out_dir, ext="png"):
+
+
     # print(in_image)
     parts = in_image.split('/')
 
     image = io.imread(in_image)
     grayscale = rgb2gray(image)
 
-    best_image = grayscale > filters.threshold_li(grayscale)
-
-    plt.box(False)
-    plt.imshow(best_image, cmap=plt.cm.gray)
-    plt.axis('off')
-
+    # best_image = grayscale > filters.threshold_mean(grayscale)
     out_img = '{}/{}'.format(out_dir,parts[-1])
     print(out_img)
-    plt.savefig(out_img, bbox_inches='tight')
+    im = Image.fromarray(np.uint8(grayscale*255))
+    # PIL_image = Image.fromarray(np.uint8(grayscale)).convert('RGB')
+    im.save(out_img)
+
 
 # ======================================  
 def main(argv):
@@ -55,6 +57,8 @@ def main(argv):
 
     parser.add_argument("-o", "--out", action="store", required=True, dest="out", help="image output directory")
 
+    parser.add_argument("-e", "--ext", action="store", required=False, dest="ext", default="png", help="image output directory")
+
     args = parser.parse_args()
 
     try:
@@ -62,7 +66,7 @@ def main(argv):
     except OSError:
         pass
 
-    all_files = find_files(args.indir)
+    all_files = find_files(args.indir, '*.{}'.format(args.ext))
     for file_path in all_files:
         filter_image(file_path, args.out)
         

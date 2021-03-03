@@ -3,6 +3,7 @@ import sys, os
 import argparse
 import uuid
 import shutil
+from PIL import Image
 
 def find_files(dir_name, pattern="*.png", recursive=True):
     # Using '*' pattern 
@@ -23,8 +24,13 @@ def main(argv):
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-i", "--in", action="store", required=True, dest="indir", help="image input directory")
-
+    
     parser.add_argument("-o", "--out", action="store", required=True, dest="out", help="image output directory")
+
+    parser.add_argument("-s", "--source", action="store", required=True, dest="source", help="image source format")
+    
+    parser.add_argument("-t", "--target", action="store", required=True, dest="target", help="image target format")
+    
 
     args = parser.parse_args()
 
@@ -33,11 +39,11 @@ def main(argv):
     except OSError:
         pass
 
-    all_files = find_files(args.indir, pattern="*.png")
+    all_files = find_files(args.indir, pattern="*.{}".format(args.source))
     for file_path in all_files:
-        parts = file_path.split('/')
-        out_img = '{}/{}.png'.format(args.out,str(uuid.uuid4()))     
-        shutil.copy(file_path, out_img)
+        im = Image.open(file_path)  
+        out_img = '{}/{}.{}'.format(args.out,str(uuid.uuid4()), args.target)  
+        im.save(out_img)
         print('copy src:{} dest:{}'.format(file_path,out_img))
         
 

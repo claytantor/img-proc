@@ -1,5 +1,13 @@
 # img-proc
 
+# creating a pyenv
+```
+pyenv virtualenv 3.8.0 img-proc
+pyenv activate img-proc
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
 ## building the container
 docker build -t img-proc:latest .
 
