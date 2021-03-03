@@ -1,4 +1,7 @@
 import sys, os
+import os.path
+from os import path
+import json
 import argparse
 import utils
 import image_slicer
@@ -20,7 +23,7 @@ def crop(out_path, input, height, width, k, page, area):
             k +=1
 
 
-def slice_img(slice_img_path, out_dir, cols=2, rows=2, tile_size=1024, ext="png"):
+def slice_img(slice_img_path, out_dir, image_number, id_list, cols=2, rows=2, tile_size=1024, ext="png"):
 
     lookup = {
         'png':'PNG',
@@ -31,12 +34,16 @@ def slice_img(slice_img_path, out_dir, cols=2, rows=2, tile_size=1024, ext="png"
     print(pil_image.size)
 
     page = 0
+    index_id = 0
     for r_val in range(0, rows):
-        print(r_val)
         for c_val in range(0, cols):
-            print('{} row:{} col:{}'.format(slice_img_path, r_val, c_val))
 
-            # crop(out_dir, slice_img_path, height, width, k, page, area)
+            # get the id
+            id_index_offset = image_number*rows*cols+index_id
+            id_uuid = id_list[id_index_offset]
+
+
+            print('{} row:{} col:{} id:{}'.format(slice_img_path, r_val, c_val, id_uuid))
 
             # Setting the points for cropped image 
             left = c_val * tile_size
@@ -44,27 +51,24 @@ def slice_img(slice_img_path, out_dir, cols=2, rows=2, tile_size=1024, ext="png"
             right = (c_val+1) * tile_size
             bottom = (r_val+1) * tile_size
             box = (left, top, right, bottom)
-            print(box)
+            # print(box)
             
             # Cropped image of above dimension 
             # (It will not change orginal image) 
             im1 = pil_image.crop(box)
-            out_img = '{}/{}.{}'.format(out_dir, str(uuid.uuid4()), ext)  
+            out_img = '{}/{}.{}'.format(out_dir, id_uuid, ext)  
             im1.save(out_img)
 
+            index_id+=1
 
 
-    # tiles = image_slicer.slice(slice_img_path, int(cols*rows), save=False)
-    # # image_slicer.save_tiles(tiles)
-    # slice_img_path_parts = slice_img_path.split('/')
-    # # return
-    # index = 0
-    # for tile in tiles:
-    #     slice_name = slice_img_path_parts[-1].replace('.{}'.format(ext),'_{}.{}'.format(index, ext))
-    #     out_img = '{}/{}'.format(out_dir, slice_name)
-    #     tile.image.save(out_img, lookup[ext])
-    #     print(out_img, tile.image.format, "%d w %d h" % tile.image.size, tile.image.mode)
-    #     index += 1
+
+def generate_ids(count=1000):
+    ids = []
+    for i in range(0,count):
+        ids.append(str(uuid.uuid4()))
+    return ids
+
 
 
 # ======================================  
@@ -92,13 +96,30 @@ def main(argv):
     except OSError:
         pass
 
+
+    id_list=[]
+    # look to see if there is an id list in the output dir
+    ids_file = '{}/ids.json'.format(args.out)
+    if path.exists(ids_file) :
+        # load id_list as json file
+        with open(ids_file) as f:
+            id_list = json.load(f)
+        
+    else:
+        # create id_list
+        id_list = generate_ids(count=300)
+
+        with open(ids_file, 'w') as json_file:
+            json.dump(id_list, json_file)
+
     print(args.indir)
     all_files = utils.find_files(args.indir, pattern="*.{}".format(args.ext))
     print(all_files)
+    image_number = 0
     for file_path in all_files:
-        slice_img(file_path, args.out, int(args.cols), int(args.rows))
+        slice_img(file_path, args.out, image_number, id_list, int(args.cols), int(args.rows))
+        image_number+=1
         
-
 
 if __name__ == "__main__":
     main(sys.argv[1:])

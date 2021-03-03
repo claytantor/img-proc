@@ -20,5 +20,29 @@ docker run -it --rm -v $(pwd)/workspace:/workspace img-proc:latest python imgsli
 
 
 ## image copy
+image copy will copy and format such as change a TIF to a PNG. 
 
-docker run -it --rm -v $(pwd)/workspace:/workspace img-proc:latest python imgcopy.py -i /workspace/in/mirrors -o /workspace/out/mirrors
+## image colorize
+image colorize will use skimage filters to change a file. 
+
+`python imgcolorize.py -i "$IMG_ROOT/reflect01_png_split" -o "$IMG_ROOT/reflect01_colorize" -c "$(pwd)/projects/$PROJECT/colors.xml"`
+
+## image filter
+`python imgfilter.py -i /Users/claytongraham/data/projects/nifty/faces/reflect01_png_split -o /Users/claytongraham/data/projects/nifty/faces/reflect01_grey`
+
+## image slice
+`python imgslice.py -i /Users/claytongraham/data/projects/nifty/faces/reflect01_png_scaled -o /Users/claytongraham/data/projects/nifty/faces/reflect01_png_split -c 16 -r 1`
+
+# image xform
+`python imgxform.py -i /home/clay/data/projects/nifty/all/reflect01_txt -o /home/clay/data/projects/nifty/all/reflect01_thumb -x scale -v 25`
+
+# image text
+add text overlays
+`python imgtext.py -i /home/clay/data/projects/nifty/all/reflect01_txt -o /home/clay/data/projects/nifty/all/reflect01_thumb -x scale -v 25`
+
+
+# running project scripts
+bash $(pwd)/projects/reflect/makebase.sh target_1
+
+
+

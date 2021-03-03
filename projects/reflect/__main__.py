@@ -8,14 +8,15 @@ import xml.etree.ElementTree as ET
 import random
 import glob
 import utils
+import argparse
+
 from PIL import Image, ImageDraw, ImageFont
 
-text_path = "/Users/claytongraham/data/projects/nifty/txt"
-colors_path = "/Users/claytongraham/data/projects/nifty/colors"
-images_path = "/Users/claytongraham/data/projects/nifty/faces/reflect01_colorize"
-font_path_OCR = "/Users/claytongraham/data/projects/nifty/fonts/OCRA.ttf"
-images_path_target = "/Users/claytongraham/data/projects/nifty/faces/reflect01_txt"
-
+# text_path = "/Users/claytongraham/data/projects/nifty/txt"
+# colors_path = "/Users/claytongraham/data/projects/nifty/colors"
+# images_path = "/Users/claytongraham/data/projects/nifty/faces/reflect01_colorize"
+# font_path_OCR = "/Users/claytongraham/data/projects/nifty/fonts/OCRA.ttf"
+# images_path_target = "/Users/claytongraham/data/projects/nifty/faces/reflect01_txt"
 
 def get_random_pallet(xmlcolors):
     pallets = []
@@ -117,20 +118,47 @@ def save_data(images_data):
     f.close()
 
 
-if __name__ == "__main__":
+def generate_colors_model(id_list):
+    for id_val in id_list:
+        print(id_val)
+
+
+def main(argv):
+    print("starting batch img processing. ")
+
+    # Read in command-line parameters
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-i", "--in", action="store", required=True, dest="indir", help="image input directory")
+    parser.add_argument("-o", "--out", action="store", required=True, dest="out", help="image output directory")
+    parser.add_argument("-t", "--text", action="store", required=True, dest="text_path", help="directory to find text")  
+    # parser.add_argument("-u", "--uuid_file", action="store", required=True, dest="uuid_file", help="file containing the uuid list")
+    parser.add_argument("-c", "--colors_file", action="store", required=True, dest="colors_file", help="file containing the colorized_images info")
+    parser.add_argument("-f", "--font_ttf", action="store", required=True, dest="font_ttf", help="true type font to use")
+
+    args = parser.parse_args()
+
+    try:
+        os.makedirs(args.out)
+    except OSError:
+        pass
 
     pathdir = pathlib.Path(__file__).parent.absolute()
 
     # get the colors file
-    c_images_file = os.path.join(pathdir,"colorized_images.json")
-    colors_f = open(c_images_file, "r")
+    #c_images_file = os.path.join(args.colors_dir)
+    colors_f = open(args.colors_file, "r")
     colors_m = json.loads(colors_f.read())
 
+
+    # id_list = json.loads(colors_f.read())
+    # colors_m = generate_colors_model(id_list)
+
     # glob 1
-    images_paths = utils.find_files(images_path, pattern="*.png")
+    images_paths = utils.find_files(args.indir, pattern="*.png")
 
     # glob 2
-    txt_paths = utils.find_files(text_path, pattern="*.txt")
+    txt_paths = utils.find_files(args.text_path, pattern="*.txt")
 
     images_data = []
 
@@ -138,7 +166,7 @@ if __name__ == "__main__":
     for img_p in images_paths:
 
         img_model = {
-            'font_path': font_path_OCR
+            'font_path': args.font_ttf
         }
         img_model['image_path'] = img_p
         img_model['author'] = "@claytantor"
@@ -147,7 +175,7 @@ if __name__ == "__main__":
         img_model['id'] = img_id
         img_model['colors'] = colors_m[img_id]['colors']
 
-        text_fp = os.path.join(text_path, txt_paths[index]) 
+        text_fp = os.path.join(args.text_path, txt_paths[index]) 
         text_file = open(text_fp, "r") 
         text_file_content = text_file.read()
         text_file_content_lines = text_file_content.replace('\n','|')
@@ -157,9 +185,18 @@ if __name__ == "__main__":
 
         images_data.append(img_model)
 
-        draw_image_model(img_model, images_path_target)
+        draw_image_model(img_model, args.out)
 
         index+=1
 
     save_data(images_data)
+   
+
+
+
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
+
 

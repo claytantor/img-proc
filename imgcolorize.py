@@ -25,8 +25,6 @@ from skimage.filters import rank
 import xml.etree.ElementTree as ET
 import random
 
-# colors_path = "/Users/claytongraham/data/projects/nifty/colors/colors.xml"
-
 mpl.rcParams['axes.spines.left'] = False
 mpl.rcParams['axes.spines.right'] = False
 mpl.rcParams['axes.spines.top'] = False
@@ -161,11 +159,9 @@ def main(argv):
     for file_path in all_files:
         img_model = filter_image(file_path, args.out, get_random_pallet(colors))
         images_m[img_model['id']] = img_model
-        # if index>5:
-        #     break
         index += 1
 
-    f = open("colorized_images.json", "w")
+    f = open("{}/colorized_images.json".format(args.out), "w")
     f.write(json.dumps(images_m, indent=4))
     f.close()
         

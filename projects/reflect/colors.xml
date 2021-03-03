@@ -1,0 +1,73 @@
+<colors>
+    <palette>
+        <color name='c1-1' rgb='661013' r='102' g='16' b='19' />
+        <color name='c1-2' rgb='FF5C61' r='255' g='92' b='97' />
+        <color name='c1-3' rgb='F74046' r='247' g='64' b='70' />
+        <color name='c1-4' rgb='0AAB35' r='10' g='171' b='53' />
+        <color name='c1-5' rgb='40F771' r='64' g='247' b='113' />
+    </palette>
+    <palette>
+        <color name='c4-1' rgb='102069' r='16' g='32' b='105' />
+        <color name='c4-2' rgb='5C79FF' r='92' g='121' b='255' />
+        <color name='c4-3' rgb='4061F7' r='64' g='97' b='247' />
+        <color name='c4-4' rgb='AD8404' r='173' g='132' b='4' />
+        <color name='c4-5' rgb='F8CD4D' r='248' g='205' b='77' />
+    </palette>
+    <palette>
+        <color name='c2-1' rgb='86158A' r='134' g='21' b='138' />
+        <color name='c2-2' rgb='FA5CFF' r='250' g='92' b='255' />
+        <color name='c2-3' rgb='F140F7' r='241' g='64' b='247' />
+        <color name='c2-4' rgb='49AB0A' r='73' g='171' b='10' />
+        <color name='c2-5' rgb='8BF845' r='139' g='248' b='69' />
+    </palette>
+    <palette>
+        <color name='c3-1' rgb='507487' r='80' g='116' b='135' />
+        <color name='c3-2' rgb='2A3D47' r='42' g='61' b='71' />
+        <color name='c3-3' rgb='75AAC7' r='117' g='170' b='199' />
+        <color name='c3-4' rgb='7FB8D6' r='127' g='184' b='214' />
+        <color name='c3-5' rgb='6695AD' r='102' g='149' b='173' />
+    </palette>
+    <palette>
+        <color name='c5-1' rgb='611948' r='97' g='25' b='72' />
+        <color name='c5-2' rgb='E681C2' r='230' g='129' b='194' />
+        <color name='c5-3' rgb='E03AA6' r='224' g='58' b='166' />
+        <color name='c5-4' rgb='613652' r='97' g='54' b='82' />
+        <color name='c5-5' rgb='AD2D80' r='173' g='45' b='128' />
+    </palette>
+
+    <palette>
+        <color name='c6-1' rgb='ED7E32' r='237' g='126' b='50' />
+        <color name='c6-2' rgb='F7AAA1' r='247' g='170' b='161' />
+        <color name='c6-3' rgb='E03AA6' r='224' g='58' b='166' />
+        <color name='c6-4' rgb='B02DFA' r='176' g='45' b='250' />
+        <color name='c6-5' rgb='A49DF2' r='164' g='157' b='242' />
+    </palette>
+
+    <palette>
+        <color name='Illustration-1' rgb='5EBFAD' r='93' g='191' b='173' />
+        <color name='Illustration-2' rgb='F2C230' r='242' g='193' b='48' />
+        <color name='Illustration-3' rgb='F2EAD0' r='242' g='233' b='208' />
+        <color name='Illustration-4' rgb='F2A477' r='242' g='164' b='118' />
+        <color name='Illustration-5' rgb='D95A2B' r='216' g='89' b='43' />
+    </palette>
+
+
+    <palette>
+    <color name='Travel-1' rgb='034C8C' r='3' g='76' b='140' />
+    <color name='Travel-2' rgb='70735D' r='112' g='115' b='93' />
+    <color name='Travel-3' rgb='F2B705' r='242' g='183' b='5' />
+    <color name='Travel-4' rgb='F29F05' r='242' g='159' b='5' />
+    <color name='Travel-5' rgb='F28705' r='242' g='135' b='5' />
+    </palette>
+
+    <palette>
+    <color name='Game-Design-1' rgb='F22738' r='242' g='39' b='56' />
+    <color name='Game-Design-2' rgb='F23DE6' r='242' g='61' b='230' />
+    <color name='Game-Design-3' rgb='F1A0F2' r='241' g='160' b='242' />
+    <color name='Game-Design-4' rgb='CB3DF2' r='203' g='61' b='242' />
+    <color name='Game-Design-5' rgb='241D40' r='36' g='29' b='64' />
+    </palette>
+
+
+
+</colors>

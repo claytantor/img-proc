@@ -1,5 +1,8 @@
 import glob
+import os.path
+from os import path
 from PIL import Image
+
 
 def open_image(img_path):
     try:

@@ -31,7 +31,6 @@ def main(argv):
     
     parser.add_argument("-t", "--target", action="store", required=True, dest="target", help="image target format")
     
-
     args = parser.parse_args()
 
     try:
@@ -42,7 +41,8 @@ def main(argv):
     all_files = find_files(args.indir, pattern="*.{}".format(args.source))
     for file_path in all_files:
         im = Image.open(file_path)  
-        out_img = '{}/{}.{}'.format(args.out,str(uuid.uuid4()), args.target)  
+        parts = file_path.split('/')
+        out_img = '{}/{}.{}'.format(args.out,str(parts[-1:][0][:-4]), args.target)  
         im.save(out_img)
         print('copy src:{} dest:{}'.format(file_path,out_img))
         
