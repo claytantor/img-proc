@@ -1,0 +1,14 @@
+starting batch img processing. 
+c1d-1
+/home/clay/data/projects/nifty/target_2/reflect01_colorize/6fabfb68-7a88-4b6c-bd97-e74b905e08c3.png
+c3e-1
+/home/clay/data/projects/nifty/target_2/reflect01_colorize/8c22f556-9ed5-4415-9cb2-f76aba5c04aa.png
+c4e-1
+/home/clay/data/projects/nifty/target_2/reflect01_colorize/a507bb34-8495-4b55-bb93-f9749a68b50a.png
+c3e-1
+/home/clay/data/projects/nifty/target_2/reflect01_colorize/a8cf64bd-8caf-45fd-b1b7-01673746c98e.png
+c3e-1
+/home/clay/data/projects/nifty/target_2/reflect01_colorize/3d7b4715-c72b-4bac-8f8e-60a8c4544eaa.png
+c6b-1
+/home/clay/data/projects/nifty/target_2/reflect01_colorize/1a71bdde-d562-4f3b-8402-0c7fdc78a275.png
+c2b-1

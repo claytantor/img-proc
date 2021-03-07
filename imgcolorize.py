@@ -38,12 +38,36 @@ def find_files(dir_name, pattern="*.png", recursive=True):
         all_files.append(name)
     return all_files 
 
+
 def get_random_pallet(xmlcolors):
     pallets = []
     for pallet in xmlcolors:
         pallets.append(pallet)
 
     return random.choice(pallets)
+
+
+def floor_ceil_float(f_val, floor=0.0, ceil=1.0):
+    if f_val < floor:
+        return floor
+    elif f_val > ceil:
+        return ceil
+    else:
+        return f_val
+
+
+def randomize_color(color_array):
+
+    factor_l = [-0.3,0.0,0.3]
+    r_push = color_array[0]+(random.random()*random.choice(factor_l))
+    g_push = color_array[1]+(random.random()*random.choice(factor_l))
+    b_push = color_array[2]+(random.random()*random.choice(factor_l))
+
+    return [
+        floor_ceil_float(r_push), 
+        floor_ceil_float(g_push),
+        floor_ceil_float(b_push)]
+
 
 def get_colors(pallet):
     colors = []
@@ -72,6 +96,8 @@ def filter_image(in_image, out_dir, pallet):
 
 
     p_colors = get_colors(pallet)  
+    name = p_colors[0].attrib['name']
+    print(name)
 
     img_rgb = img_as_float64(io.imread(in_image))
     grayscale_image = color.rgb2gray(img_rgb)
@@ -84,25 +110,18 @@ def filter_image(in_image, out_dir, pallet):
     # # expects an RGB image (height x width x channel), but fancy-indexing returns
     # # a set of RGB pixels (# pixels x channel).
 
-    color_multiplier_0 = get_color_by_index(p_colors, 0)
-    color_multiplier_1 = get_color_by_index(p_colors, 1)
-    color_multiplier_2 = get_color_by_index(p_colors, 2)
-    color_multiplier_3 = get_color_by_index(p_colors, 3)
-    color_multiplier_4 = get_color_by_index(p_colors, 4)
+    color_multiplier_0 = randomize_color(get_color_by_index(p_colors, 0))
+    color_multiplier_1 = randomize_color(get_color_by_index(p_colors, 1))
+    color_multiplier_2 = randomize_color(get_color_by_index(p_colors, 2))
+    color_multiplier_3 = randomize_color(get_color_by_index(p_colors, 3))
+    color_multiplier_4 = randomize_color(get_color_by_index(p_colors, 4))
     image_m['colors'] = [color_multiplier_0, color_multiplier_1, color_multiplier_2, color_multiplier_3, color_multiplier_4]
 
     thresh = skimage.filters.threshold_otsu(grayscale_image)
     binary = grayscale_image <= thresh
-    
-  
-    #noisy = rank.entropy(grayscale_image, np.ones((9, 9)))
-    #noisy = rank.entropy(grayscale_image, disk(2))
-    
-    # noisy =  rank.otsu(grayscale_image, disk(10))
-    # noisy =  rank.otsu(grayscale_image, np.ones((9, 9)))
+      
     noisy =  rank.threshold(grayscale_image, square(9))
 
-    # print(noisy.min(), noisy.max(), noisy.mean())
     n_max = noisy.mean() 
 
     textured_regions_0 = noisy < (n_max * .1) 
@@ -118,7 +137,7 @@ def filter_image(in_image, out_dir, pallet):
     masked_image[textured_regions_2, :] *= color_multiplier_2
     masked_image[textured_regions_3, :] *= color_multiplier_3
     masked_image[textured_regions_4, :] *= color_multiplier_4
-    masked_image[binary, :] *= color_multiplier_4
+    masked_image[binary, :] *= color_multiplier_0
 
 
     out_img = '{}/{}'.format(out_dir, parts[-1])

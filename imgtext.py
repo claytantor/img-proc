@@ -24,17 +24,18 @@ def draw_textline(message_text, draw, font, color, shadowcolor, xpos, ypos, offs
 
 
 def draw_paragraph(p_text, image_draw, ttf_font_path, 
-    x_pos, y_pos, title_size=45, color = 'rgb(0, 0, 0)', 
-    shadowcolor = 'rgb(255, 255, 255)'):
+    x_pos, y_pos, title_size=45, justify=False, line_width=25, color = 'rgb(0, 0, 0)', 
+    shadowcolor = 'rgb(255, 255, 255)', max_lines=10):
 
     font_title = ImageFont.truetype(ttf_font_path, size=title_size)
 
+    lines = p_text.split("\n")
+    if justify:
+        lines = textwrap.wrap(p_text, width=line_width)
 
-    lines = textwrap.wrap(p_text, width=20)
-    line_height = 45
     index = 0
-    for line in lines:
-        draw_textline(line, image_draw, font_title, color, shadowcolor, x_pos, y_pos+(index*line_height))
+    for line in lines[:max_lines]:
+        draw_textline(line, image_draw, font_title, color, shadowcolor, x_pos, y_pos+(index*title_size), offset=2)
         index += 1
 
 
