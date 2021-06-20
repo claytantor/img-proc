@@ -3,7 +3,7 @@ import os.path
 from os import path
 import json
 import argparse
-import utils
+import cutils
 import image_slicer
 from PIL import Image
 import uuid
@@ -86,6 +86,8 @@ def main(argv):
 
     parser.add_argument("-r", "--rows", action="store", required=True, dest="rows", help="row slices")
 
+    parser.add_argument("-s", "--size", action="store", required=True, dest="size", help="tile size")
+
     parser.add_argument("-e", "--ext", action="store", required=False, default='png', dest="ext", help="image type")
 
 
@@ -117,7 +119,7 @@ def main(argv):
     print(all_files)
     image_number = 0
     for file_path in all_files:
-        slice_img(file_path, args.out, image_number, id_list, int(args.cols), int(args.rows))
+        slice_img(file_path, args.out, image_number, id_list, int(args.cols), int(args.rows), tile_size=int(args.size))
         image_number+=1
         
 

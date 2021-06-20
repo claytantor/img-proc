@@ -8,13 +8,13 @@ import numpy as np
 
 from PIL import Image
 
-from skimage import data
+from skimage import data, exposure
 # from skimage.filters import try_all_threshold, sobel, threshold_mean
 from skimage import io
 from skimage import img_as_ubyte
 from skimage.color import rgb2gray, gray2rgb
 from skimage import filters, data
-from skimage.morphology import disk, ball
+from skimage.morphology import disk, ball, square
 from skimage import exposure
 
 mpl.rcParams['axes.spines.left'] = False
@@ -58,6 +58,12 @@ def array2image(np_image_array):
 
 def filter_image(in_image, out_dir, filter="rgb2grey", ext="png"):
 
+    try:
+        os.makedirs(out_dir)
+    except OSError:
+        pass
+
+
     # print(in_image)
     parts = in_image.split('/')
 
@@ -84,11 +90,34 @@ def filter_image(in_image, out_dir, filter="rgb2grey", ext="png"):
         glob = exposure.equalize_hist(noisy_image) * 255
         #im = Image.fromarray(glob, 'RGB')     
         im = Image.fromarray(np.uint8(glob))
+    elif filter=='local_contrast_enhancement':
+        noisy_image = img_as_ubyte(np_image_array)
+        enh = filters.rank.enhance_contrast(noisy_image, square(5))
+        #im = Image.fromarray(glob, 'RGB')     
+        im = Image.fromarray(np.uint8(enh))      
+
+    elif filter=='rescale_intensity':
+        noisy_image = img_as_ubyte(np_image_array)
+        v_min, v_max = np.percentile(noisy_image, (0.2, 92.8))
+
+        better_contrast = exposure.rescale_intensity(
+                                 noisy_image, in_range=(v_min, v_max))
+        im = Image.fromarray(np.uint8(better_contrast))
+
+
+
+    elif "autolevel":
+        selem = square(20)
+        loc_autolevel = filters.rank.autolevel(np_image_array, selem=selem)
+        im = Image.fromarray(np.uint8(loc_autolevel))
+
+
 
     if im != None:
         out_img = '{}/{}'.format(out_dir,parts[-1])
         print(out_img)
         im.save(out_img)
+        return out_img
 
 
 # ======================================  

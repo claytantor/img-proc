@@ -4,16 +4,15 @@ import argparse
 import uuid
 import shutil
 from PIL import Image
+from cutils import find_files
 
-def find_files(dir_name, pattern="*.png", recursive=True):
-    # Using '*' pattern 
-    all_files = [] 
-    for name in glob.glob('{}/**/{}'.format(dir_name, pattern), recursive=True): 
-        all_files.append(name)
-    return all_files 
 
-def copy_file(from_file, to_file):
-    pass
+# def find_files(dir_name, pattern="*.png", recursive=True):
+#     # Using '*' pattern 
+#     all_files = [] 
+#     for name in glob.glob('{}/**/{}'.format(dir_name, pattern), recursive=True): 
+#         all_files.append(name)
+#     return all_files 
 
 
 # ======================================  

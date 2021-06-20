@@ -1,0 +1,78 @@
+<colors>
+
+   <palette>
+        <color name='c1d-1' rgb='FF82AD' r='255' g='130' b='173' />
+        <color name='c1d-2' rgb='FFB18B' r='255' g='177' b='139' />
+        <color name='c1d-3' rgb='733820' r='115' g='56' b='32' />
+        <color name='c1d-4' rgb='DD8CFF' r='221' g='140' b='255' />
+        <color name='c1d-5' rgb='5F1666' r='95' g='22' b='102' />
+    </palette> 
+    
+    <palette>
+        <color name='c6a-1' rgb='B85C27' r='184' g='92' b='39' />
+        <color name='c6a-2' rgb='70310C' r='112' g='49' b='12' />
+        <color name='c6a-3' rgb='FFA26B' r='255' g='162' b='107' />
+        <color name='c6a-4' rgb='016B6B' r='1' g='107' b='107' />
+        <color name='c6a-5' rgb='27B8B7' r='39' g='184' b='183' />
+    </palette>
+    <palette>
+        <color name='c3e-1' rgb='C74495' r='199' g='68' b='149' />
+        <color name='c3e-2' rgb='502F82' r='80' g='47' b='130' />
+        <color name='c3e-3' rgb='FA9DD3' r='250' g='157' b='211' />
+        <color name='c3e-4' rgb='61005B' r='97' g='0' b='91' />
+        <color name='c3e-5' rgb='FAE6A0' r='250' g='230' b='160' />
+    </palette>
+    <palette>
+        <color name='c6b-1' rgb='C96A2A' r='201' g='106' b='42' />
+        <color name='c6b-2' rgb='F7AAA1' r='247' g='170' b='161' />
+        <color name='c6b-3' rgb='E082BF' r='224' g='130' b='191' />
+        <color name='c6b-4' rgb='541678' r='84' g='22' b='120' />
+        <color name='c6b-5' rgb='B9B3F2' r='185' g='179' b='242' />
+    </palette>
+
+
+
+
+
+    <!-- <palette>
+        <color name='c2b-1' rgb='86158A' r='134' g='21' b='138' />
+        <color name='c2b-2' rgb='FA5CFF' r='250' g='92' b='255' />
+        <color name='c2b-3' rgb='F1B2F7' r='241' g='178' b='247' />
+        <color name='c2b-4' rgb='1E4704' r='30' g='71' b='4' />
+        <color name='c2b-5' rgb='8BF845' r='139' g='248' b='69' />
+    </palette> 
+    
+    
+      <palette>
+        <color name='c4e-1' rgb='0A1B6B' r='10' g='27' b='107' />
+        <color name='c4e-2' rgb='5C79FF' r='92' g='121' b='255' />
+        <color name='c4e-3' rgb='635ABA' r='99' g='90' b='186' />
+        <color name='c4e-4' rgb='FFF48E' r='255' g='244' b='142' />
+        <color name='c4e-5' rgb='F8CD4D' r='248' g='205' b='77' />
+    </palette>  
+
+
+       <palette>
+        <color name='c5g-1' rgb='BBEB74' r='187' g='235' b='116' />
+        <color name='c5g-2' rgb='2A703E' r='42' g='112' b='62' />
+        <color name='c5g-3' rgb='FF80B3' r='255' g='128' b='179' />
+        <color name='c5g-4' rgb='3B2038' r='59' g='32' b='56' />
+        <color name='c5g-5' rgb='8A119E' r='138' g='17' b='158' />
+    </palette>
+     <palette>
+        <color name='c7a-1' rgb='BBEB74' r='187' g='235' b='116' />
+        <color name='c7a-2' rgb='2A703E' r='42' g='112' b='62' />
+        <color name='c7a-3' rgb='4E89E0' r='78' g='137' b='224' />
+        <color name='c7a-4' rgb='43D6D5' r='67' g='214' b='213' />
+        <color name='c7a-5' rgb='00799F' r='0' g='121' b='159' />
+    </palette> 
+    
+    -->
+
+
+
+
+
+
+
+</colors>

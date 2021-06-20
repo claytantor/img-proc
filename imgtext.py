@@ -1,16 +1,75 @@
 import sys, os
 import argparse
-import utils
+import cutils
 import textwrap
 
 # import required classes
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 # create Image object with the input image
 # I = numpy.asarray(Image.open('/Users/claytongraham/data/projects/nifty/colors/AdobeColor-c1.jpeg'))
 
-def draw_textline(message_text, draw, font, color, shadowcolor, xpos, ypos, offset = 3):
+
+
+    
+
+
+def draw_text_shadow(im, message_text, draw, font, color, shadowcolor, xpos, ypos, offset = 6):
+
+    (x,y) = (xpos,ypos)
+
+    txt = Image.new('RGBA', im.size, (255,255,255,0))
+    d = ImageDraw.Draw(txt)    
+
+    d.text((x-offset, y-offset), message_text, font=font, fill=shadowcolor)
+    d.text((x+offset, y-offset), message_text, font=font, fill=shadowcolor)
+    d.text((x-offset, y+offset), message_text, font=font, fill=shadowcolor)
+    d.text((x+offset, y+offset), message_text, font=font, fill=shadowcolor)
+
+    # im = Image.alpha_composite(im, txt)
+    return txt
+
+
+def make_shadow(image, iterations, border, offset, backgroundColour, shadowColour):
+    # image: base image to give a drop shadow
+    # iterations: number of times to apply the blur filter to the shadow
+    # border: border to give the image to leave space for the shadow
+    # offset: offset of the shadow as [x,y]
+    # backgroundCOlour: colour of the background
+    # shadowColour: colour of the drop shadow
+
+    
+    #Calculate the size of the shadow's image
+    fullWidth  = image.size[0] + abs(offset[0]) + 2*border
+    fullHeight = image.size[1] + abs(offset[1]) + 2*border
+    
+    #Create the shadow's image. Match the parent image's mode.
+    shadow = Image.new(image.mode, (fullWidth, fullHeight), backgroundColour)
+    
+    # Place the shadow, with the required offset
+    shadowLeft = border + max(offset[0], 0) #if <0, push the rest of the image right
+    shadowTop  = border + max(offset[1], 0) #if <0, push the rest of the image down
+    #Paste in the constant colour
+    shadow.paste(shadowColour, 
+                [shadowLeft, shadowTop,
+                 shadowLeft + image.size[0],
+                 shadowTop  + image.size[1] ])
+    
+    # Apply the BLUR filter repeatedly
+    for i in range(iterations):
+        shadow = shadow.filter(ImageFilter.BLUR)
+
+    # Paste the original image on top of the shadow 
+    imgLeft = border - min(offset[0], 0) #if the shadow offset was <0, push right
+    imgTop  = border - min(offset[1], 0) #if the shadow offset was <0, push down
+    shadow.paste(image, (imgLeft, imgTop))
+
+    return shadow
+
+
+
+def draw_textline(im, message_text, draw, font, color, shadowcolor, xpos, ypos, offset = 3):
 
     (x,y) = (xpos,ypos)
 
@@ -23,7 +82,7 @@ def draw_textline(message_text, draw, font, color, shadowcolor, xpos, ypos, offs
     draw.text((x, y), message_text, fill=color, font=font)
 
 
-def draw_paragraph(p_text, image_draw, ttf_font_path, 
+def draw_paragraph(im, p_text, image_draw, ttf_font_path, 
     x_pos, y_pos, title_size=45, justify=False, line_width=25, color = 'rgb(0, 0, 0)', 
     shadowcolor = 'rgb(255, 255, 255)', max_lines=10):
 
@@ -35,11 +94,11 @@ def draw_paragraph(p_text, image_draw, ttf_font_path,
 
     index = 0
     for line in lines[:max_lines]:
-        draw_textline(line, image_draw, font_title, color, shadowcolor, x_pos, y_pos+(index*title_size), offset=2)
+        draw_textline(im, line, image_draw, font_title, color, shadowcolor, x_pos, y_pos+(index*title_size), offset=2)
         index += 1
 
 
-def draw_title(title_message_text, draw, ttf_font_path, title_size=45):
+def draw_title(im, title_message_text, draw, ttf_font_path, title_size=45):
     font_title = ImageFont.truetype(ttf_font_path, size=title_size)
 
     (x, y) = (5, 5)
@@ -50,16 +109,16 @@ def draw_title(title_message_text, draw, ttf_font_path, title_size=45):
     line_height = 45
     index = 0
     for line in lines:
-        draw_textline(line, draw, font_title, color, shadowcolor, 5, (index*line_height))
+        draw_textline(im, line, draw, font_title, color, shadowcolor, 5, (index*line_height))
         index += 1
 
 
-def draw_album_name(txt_message_text, draw, img, ttf_font_path, txt_size=20):
+def draw_album_name(im, txt_message_text, draw, img, ttf_font_path, txt_size=20):
     font_album = ImageFont.truetype(ttf_font_path, size=txt_size)
     # (x, y) = (img.height-txt_size-5, 5)
     color = 'rgb(0, 0, 0)' # black color
     shadowcolor = 'rgb(255, 255, 255)' # grey color
-    draw_textline(txt_message_text, draw, font_album, color, shadowcolor, 5, img.height-txt_size-5)
+    draw_textline(im, txt_message_text, draw, font_album, color, shadowcolor, 5, img.height-txt_size-5)
 
 
 def text_overlay(image_path, title_message_text, ttf_font_path, out_dir, img_name=None):

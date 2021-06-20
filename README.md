@@ -44,5 +44,31 @@ add text overlays
 # running project scripts
 bash $(pwd)/projects/reflect/makebase.sh target_1
 
+# SCRATCH
 
 
+
+
+
+python imgxform.py -i /home/clay/data/github.com/claytantor/img-proc/workspace/ghosts_gan/gengan -o /home/clay/data/github.com/claytantor/img-proc/workspace/ghosts_gan/gengan_s -x scale -v 2.775067751
+
+
+python imgfilter.py -i /home/clay/data/github.com/claytantor/img-proc/workspace/ghosts_gan/gengan_s -o /home/clay/data/github.com/claytantor/img-proc/workspace/ghosts_gan/gengan_g -f rgb2grey
+
+
+
+FLASK_APP=app.py APP_CONFIG=app.cfg flask run --host=0.0.0.0 --port=8003
+
+
+
+## building the container
+```
+docker build -t claytantor/loa-img-proc:latest .
+```
+### from docker
+```bash
+docker run -p 8003:8003 --gpus all --shm-size=1g --ulimit memlock=-1 \
+    -e FLASK_ENV=development -e FLASK_APP=app.py -e APP_CONFIG=app.cfg \
+    --ulimit stack=67108864 -it --rm -v $(pwd)/workspace:/workspace \
+    claytantor/loa-img-proc:latest
+```
